@@ -4,3 +4,9 @@
 .project
 
 .classpath
+
+*.class
+
+outputemails.txt
+
+inputemails.txt
