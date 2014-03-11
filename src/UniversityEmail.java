@@ -1,4 +1,4 @@
-//UniversityEmail inherite from Email
+//UniversityEmail inherit from Email
 public class UniversityEmail extends Email {
 	//private data attribute
 	private int code;

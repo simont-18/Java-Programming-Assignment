@@ -30,5 +30,4 @@ public class EmailData {
 	public UniversityEmail getUE() {
 		return UE;
 	}
-
 }

@@ -9,8 +9,10 @@ public class Main {
 	public static void main(String args []) throws FileNotFoundException {
 		//ArrayList list to store all email
 		ArrayList<EmailData> list = new ArrayList<EmailData>();
+		
 		//reading email from inputemails.txt
 		readEmail(list);
+		
 		//writing the specific type of email requested to outputemails.txt
 		writeEmail(list, getOutputCode());
 	}
@@ -21,37 +23,37 @@ public class Main {
 		Scanner in = new Scanner(new FileInputStream("inputemails.txt"));
 		
 		//split email into userName(us), subDomain(sd), domain(d), extension(e)
-		String word, us, sd, d, e;
+		String currentWord, us, sd, d, e;
 		
 		//while there is content in the file, continue to read
 		while(in.hasNext()) {
-			word = us = sd = d = e = null;
-			word = in.next();			
-			//if the current word contain '@', then it is consider as an email
-			if(word.contains("@"))
+			currentWord = us = sd = d = e = null;
+			currentWord = in.next();			
+			//if the current currentWord contain '@', then it is consider as an email
+			if(currentWord.contains("@"))
 			{
-				//userName
-				us = word.substring(0, word.indexOf("@"));
+				//assigning userName
+				us = currentWord.substring(0, currentWord.indexOf("@"));
 				
-				//extension
-				if(word.endsWith(","))
-					e = word.substring(word.lastIndexOf(".") + 1, word.length() - 1);
+				//assigning extension
+				if(currentWord.endsWith(","))
+					e = currentWord.substring(currentWord.lastIndexOf(".") + 1, currentWord.length() - 1);
 				else
-					e = word.substring(word.lastIndexOf(".") + 1, word.length());
+					e = currentWord.substring(currentWord.lastIndexOf(".") + 1, currentWord.length());
 				
-				//subDomain & domain 
+				//assigning subDomain & domain 
 				int periodCount = 0;
-				for(int i = word.indexOf("@"); i < word.length(); i++)
-					if(word.charAt(i) == '.')
+				for(int i = currentWord.indexOf("@"); i < currentWord.length(); i++)
+					if(currentWord.charAt(i) == '.')
 						periodCount++;
 				
-				//if there is one period in the word then it is consider as Email, if there is two period in the word then it is consider as UniversityEmail
+				//if there is one period in the currentWord then it is consider as Email, if there is two period in the currentWord then it is consider as UniversityEmail
 				if(periodCount == 1) {
-					d = word.substring(word.indexOf("@") + 1, word.indexOf('.'));
+					d = currentWord.substring(currentWord.indexOf("@") + 1, currentWord.indexOf('.'));
 					list.add(new EmailData(new Email(us, d, e)));
 				} else if(periodCount == 2) {
-					sd = word.substring(word.indexOf("@") + 1, word.indexOf('.'));
-					d = word.substring(word.indexOf('.') + 1, word.lastIndexOf('.'));
+					sd = currentWord.substring(currentWord.indexOf("@") + 1, currentWord.indexOf('.'));
+					d = currentWord.substring(currentWord.indexOf('.') + 1, currentWord.lastIndexOf('.'));
 					list.add(new EmailData(new UniversityEmail(us, sd, d, e)));
 				}
 			}
@@ -67,12 +69,12 @@ public class Main {
 		String output = "";
 		int num = 0;
 		if(code == 0) {
-			//find all Email and write to file
+			//find all Email and store the Email content in output
 			for(int i = 0; i < list.size(); i++) {
 				EmailData temp = list.get(i);
 				if(temp.isUniversityEmail() == false) {
 					Email te = temp.getE();
-					output += te.toString() + "\n";
+					output += te + "\n";
 					num++;
 				}
 			}
@@ -82,13 +84,13 @@ public class Main {
 			out.println(num);
 			out.println(output);
 		} else {
-			//find all coressponding department and write to the file
+			//find all corresponding department and store the UniversityEmail content in output
 			for(int i = 0; i < list.size(); i++) {
 				EmailData temp = list.get(i);
 				if(temp.isUniversityEmail() == true) {
 					UniversityEmail tue = temp.getUE();
 					if(tue.getCode() == code) {
-						output += tue.toString() + "\n";
+						output += tue + "\n";
 						num++;
 					}
 				}
@@ -102,6 +104,8 @@ public class Main {
 		
 		//closing the file
 		out.close();
+		
+		System.out.println("Sucessfully written to outputemails.txt");
 	}
 	
 	public static int getOutputCode() {

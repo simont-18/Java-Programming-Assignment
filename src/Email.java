@@ -47,6 +47,4 @@ public class Email {
 	public String toString() {
 		return String.format("%s@%s.%s", getUserName(), getDomain(), getExtension());
 	}
-	
-	
 }
