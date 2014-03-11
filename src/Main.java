@@ -20,18 +20,17 @@ public class Main {
 		//Scanner to read from file
 		Scanner in = new Scanner(new FileInputStream("inputemails.txt"));
 		
-		//split email into username(us), subdomain(sd), domain(d), extension(e)
+		//split email into userName(us), subDomain(sd), domain(d), extension(e)
 		String word, us, sd, d, e;
-		word = us = sd = d = e = null;
 		
 		//while there is content in the file, continue to read
 		while(in.hasNext()) {
-			word = in.next();
-			
+			word = us = sd = d = e = null;
+			word = in.next();			
 			//if the current word contain '@', then it is consider as an email
 			if(word.contains("@"))
 			{
-				//username
+				//userName
 				us = word.substring(0, word.indexOf("@"));
 				
 				//extension
@@ -40,7 +39,7 @@ public class Main {
 				else
 					e = word.substring(word.lastIndexOf(".") + 1, word.length());
 				
-				//subdomain & domain 
+				//subDomain & domain 
 				int periodCount = 0;
 				for(int i = word.indexOf("@"); i < word.length(); i++)
 					if(word.charAt(i) == '.')
@@ -58,7 +57,7 @@ public class Main {
 			}
 		}
 		
-		//close the file
+		//closing the file
 		in.close();
 	}
 	
