@@ -1,0 +1,15 @@
+Name: Duy Ta
+Peoplesoft #: 1225688
+127.0.0.1:8080
+Address: 127.0.0.1 Port: 8080
+127.a.0.10:8081
+Error in Input Line
+127.0.0.1:8080.1
+Error in Input Line
+127.0.10.5:-8080
+Error in Input Line
+
+
+Summary:
+Lines read: 4
+Number of Errors: 3
