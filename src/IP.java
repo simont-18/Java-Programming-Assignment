@@ -26,73 +26,36 @@ public class IP {
 	//algorithm to determine if the input is a valid IP address
 	private boolean checkValidity() throws NumberFormatException{
 		try {
-			//declare and define StringTokenizer to split string into parts by "."
-			StringTokenizer period = new StringTokenizer(input, ".");
+			//declare and define StringTokenizer to split string into parts by ".:"
+			StringTokenizer split = new StringTokenizer(input, ".:");
 			
-			//declare StringTokenizer to split string into parts by ":"
-			StringTokenizer colon;
-			
-			/*
-			 * declare and define int size to 0
-			 * if the final size == 5 then it is a valid IP
-			 * if the final size > 5 then it is not a valid IP
-			 * if the final size < 5 then it is not a valid IP
-			 */
+			 //declare and define int size to 0
 			int size = 0;
 			
 			//while loop is use to split the string by period and by colon
-			while(period.hasMoreElements()) {
+			while(split.hasMoreElements()) {
 				//declare and define String current to the current element
-				String current = (String) period.nextElement();
+				String current = (String) split.nextElement();
 				
-				/*
-				 * if current element contain a colon
-				 * it will be further split by using a colon StringTokenizer
-				 * that is splitting the address and the port part
-				 */
-				if(current.contains(":")) {
-					//define colon with the String current
-					colon = new StringTokenizer(current, ":");
-					
-					//check to make sure there is remaining element to be process
-					if(colon.hasMoreElements()) {
-						//define the String current according to colon rule
-						current = (String) colon.nextElement();
-						
-						//check to make sure it is a positive number
-						if(Integer.parseInt(current) >= 0) {
-							address += current;
-							size++;
-							current = (String) colon.nextElement();
-							
-							//check to make sure it is a positive number
-							if(Integer.parseInt(current) >= 0) {
-								port += current;
-								size++;
-							} else
-								return false;
-						} else
-							return false;
-					}
-				} else {
-					//check to make sure it is a positive number
-					if(Integer.parseInt(current) >= 0) {
+				//check to make sure it is a positive number
+				if(Integer.parseInt(current) >= 0) {	
+					if(size == 4)
+						port += current;
+					else
 						address += current + ".";
-						size++;
-					} else
-						return false;
-				}
+					size++;
+				} else
+					return false;	
 			}
 			
 			/* if the final size == 5 then it is a valid IP
 			 * if the final size > 5 then it is not a valid IP
 			 * if the final size < 5 then it is not a valid IP
 			 */
-			if(size == 5) {
+			if(size == 5)
 				return true;
-			} else {
+			else 
 				return false;
-			}
 		} catch(Exception e) {
 			//with any NumberFormatException caught, it is not a valid IP
 			return false;
